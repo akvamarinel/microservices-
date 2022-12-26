@@ -1,0 +1,27 @@
+
+services:
+#    app:
+#        build: .
+#        container_name: app
+#        depends_on:
+#            - db
+#        environment:
+#            - POSTGRES_USER=postgres
+#            - POSTGRES_PASSWORD=postgres
+#            - POSTGRES_URL=jdbc:postgresql://db:5432/postgres
+#            - JWT_SECRET=chmonyachmonya
+#        ports:
+#            - '8080:8080'
+    masha:
+        image: 'postgres:14.1-alpine'
+        ports:
+            - '5432:5432'
+        restart: always
+        container_name: masha
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=postgres
+        volumes:
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        

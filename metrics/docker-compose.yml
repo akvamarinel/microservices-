@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    container_name: prometheus
+    user: root
+    volumes:
+      - ./prometheus:/prometheus
+    ports:
+      - '9090:9090'
+    labels:
+      org.label-schema.group: "monitoring"
+
+  grafana:
+    image: grafana/grafana:7.5.2
+    container_name: grafana
+    user: root
+    depends_on:
+      - prometheus
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+
+
+
+
